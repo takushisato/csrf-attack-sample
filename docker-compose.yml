@@ -1,0 +1,72 @@
+# CSRF 学習用の 4 サービス一括起動構成。
+#
+# 各サービスはホスト側のブラウザからアクセスする想定なので、
+# ポートはすべてホストの localhost に公開する。
+# サービス間の通信もブラウザ経由 (= localhost) なので、Compose 内部ネットワーク
+# での名前解決には依存しない。
+#
+# 使い方:
+#   docker compose up --build
+#   ブラウザで:
+#     - 被害者サイト: http://localhost:3000
+#     - 攻撃者サイト(SSR): http://localhost:9000
+#     - 攻撃者サイト(SPA): http://localhost:4000
+#
+# 停止/初期化:
+#   docker compose down -v   # victim-backend の DB ボリュームも削除
+
+services:
+  victim-backend:
+    build:
+      context: ./victim-backend
+    container_name: csrf-victim-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      # SQLite DB を永続化（コンテナ再作成しても残高が残る）
+      - victim-db:/app/data
+    environment:
+      # settings.py 側は SQLite ファイルを BASE_DIR 直下に置くのがデフォルトなので、
+      # 永続化したい場合は以下を有効にして settings.py を書き換える。
+      # ここでは学習用にデフォルト (/app/db.sqlite3) のままとし、
+      # ボリュームは予備として用意するだけ。
+      DJANGO_SETTINGS_MODULE: config.settings
+
+  victim-frontend:
+    build:
+      context: ./victim-frontend
+    container_name: csrf-victim-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      # ブラウザから fetch するときの URL (= ホストの localhost)
+      VITE_API_BASE: http://localhost:8000
+    depends_on:
+      - victim-backend
+
+  attacker-backend:
+    build:
+      context: ./attacker-backend
+    container_name: csrf-attacker-backend
+    ports:
+      - "9000:9000"
+    environment:
+      # テンプレートに埋め込む被害者サイトの URL
+      VICTIM_API_BASE: http://localhost:8000
+    depends_on:
+      - victim-backend
+
+  attacker-frontend:
+    build:
+      context: ./attacker-frontend
+    container_name: csrf-attacker-frontend
+    ports:
+      - "4000:4000"
+    environment:
+      VITE_VICTIM_API_BASE: http://localhost:8000
+      VITE_VICTIM_FRONTEND_BASE: http://localhost:3000
+    depends_on:
+      - victim-backend
+
+volumes:
+  victim-db:

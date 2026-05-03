@@ -1,0 +1,17 @@
+{% extends "traps/base.html" %} {% block title %}罠②: <img /> による GET CSRF{% endblock %} {% block content %}
+<h2>罠②: <code>&lt;img src&gt;</code> による GET CSRF</h2>
+<p>送金 API が GET でも処理してしまう実装だった場合、こんな単純なコードで攻撃が成立する。</p>
+<pre>&lt;img src="{{ victim_api_base }}/api/transfer/?to=mallory&amp;amount=1"&gt;</pre>
+
+<p style="color: #fcd34d">
+  ※ 本サンプルの送金 API は <code>POST</code> 限定なので、これは <strong>失敗例</strong> として観察できる。 DevTools の
+  Network タブで <code>405 Method Not Allowed</code> が返ることを確認すること。<br />
+  「GET で副作用を起こすな」という原則の重要性が体感できる罠。
+</p>
+
+<img
+  src="{{ victim_api_base }}/api/transfer/?to=mallory&amount=1"
+  alt="(失敗するはずの罠リクエスト)"
+  style="border: 1px dashed #f87171; padding: 8px"
+/>
+{% endblock %}

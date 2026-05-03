@@ -1,0 +1,26 @@
+{% extends "traps/base.html" %} {% block content %}
+<p>
+  まず別タブで
+  <a href="{{ victim_frontend_base }}" target="_blank">victim-frontend</a>
+  を開き、<code>alice / alicepass</code> でログインしておいてください。
+  その後、以下の罠ページを開くと挙動が観察できます。
+</p>
+
+{% for t in traps %}
+<div class="card">
+  <h3 style="margin: 0 0 6px">{{ t.title }}</h3>
+  <p style="margin: 0 0 8px">{{ t.desc }}</p>
+  <a href="{{ t.path }}">→ {{ t.path }}</a>
+</div>
+{% endfor %}
+
+<div class="card">
+  <h3 style="margin-top: 0">攻撃の前提</h3>
+  <ul>
+    <li>victim-backend が <code>{{ victim_api_base }}</code> で起動している</li>
+    <li>victim-frontend が <code>{{ victim_frontend_base }}</code> で起動している</li>
+    <li>そのブラウザで被害者ユーザー (alice) がログイン済み</li>
+    <li>送金先は <code>mallory</code> を想定（攻撃者の口座）</li>
+  </ul>
+</div>
+{% endblock %}

