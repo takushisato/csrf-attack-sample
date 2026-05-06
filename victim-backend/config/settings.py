@@ -90,16 +90,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # 学習目的で **わざと** SameSite=None にし、攻撃者サイト (別オリジン) からの
 # リクエストに対してもセッション Cookie が送出されるようにしている。
 #
-# ※ SameSite=None には Secure 属性が必須だが、ローカル学習環境 (http) で
-#    動作させたいので Secure=False にしている。Chrome 系ブラウザは
-#    None+Secure=False の Cookie を保存しないため、学習時は Firefox の
-#    使用、または `about:flags` 等での緩和を推奨。
-SESSION_COOKIE_SAMESITE = "None"
+# ※ SameSite=None には Secure 属性が必須で、ローカル http 環境では Chrome 系
+#    ブラウザに Cookie が保存されない。本サンプルでは victim-frontend
+#    (localhost:3000) も attacker-frontend (localhost:4000) も同一 eTLD+1
+#    である "localhost" 配下なので、SameSite=Lax のままでも別ポートからの
+#    Cookie 送出は同一サイト扱いとなり、CSRF 攻撃の検証は成立する。
+SESSION_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = True  # XSS は本サンプルの対象外
 
 # CSRF Cookie も同様にゆるく
-CSRF_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SAMESITE = "Lax"
 CSRF_COOKIE_SECURE = False
 CSRF_COOKIE_HTTPONLY = False
 
