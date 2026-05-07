@@ -3,7 +3,11 @@ from django.db import models
 
 
 class Account(models.Model):
-    """学習用の擬似銀行口座。1ユーザー1口座とする。"""
+    """
+    学習用の擬似銀行口座
+
+    - 1ユーザー1口座とする
+    """
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -17,7 +21,11 @@ class Account(models.Model):
 
 
 class TransferLog(models.Model):
-    """送金ログ。CSRF 攻撃の成立を可視化するために残す。"""
+    """
+    送金ログ
+
+    - CSRF 攻撃の成立を可視化
+    """
 
     from_user = models.ForeignKey(
         settings.AUTH_USER_MODEL,

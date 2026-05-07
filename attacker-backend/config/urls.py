@@ -1,5 +1,4 @@
 from django.urls import path
-
 from traps import views
 
 urlpatterns = [

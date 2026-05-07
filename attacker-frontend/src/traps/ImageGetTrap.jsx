@@ -1,7 +1,7 @@
 import { VICTIM_API_BASE, DEFAULT_TARGET } from "../config.js";
 
 /**
- * ② <img src> による GET CSRF。
+ * ② <img src> による GET CSRF
  *
  * 本サンプルの送金 API は POST 限定なので 405 が返り、
  * **失敗例として観察できる**。

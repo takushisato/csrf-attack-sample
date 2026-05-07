@@ -2,7 +2,7 @@ import { useState } from "react";
 import { VICTIM_API_BASE, DEFAULT_TARGET, DEFAULT_AMOUNT } from "../config.js";
 
 /**
- * ③ fetch + credentials:'include' によるクロスオリジン JSON POST。
+ * ③ fetch + credentials:'include' によるクロスオリジン JSON POST
  *
  * Content-Type: application/json なので本来は CORS preflight が走るが、
  * victim-backend が CORS_ALLOW_ALL_ORIGINS=True かつ

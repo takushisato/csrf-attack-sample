@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { VICTIM_API_BASE, DEFAULT_TARGET, DEFAULT_AMOUNT } from "../config.js";
 
 /**
- * ① 隠し form を自動 submit する古典的 CSRF。
+ * ① 隠し form を自動 submit する古典的 CSRF
  *
  * - enctype は application/x-www-form-urlencoded（CORS の単純リクエスト）
  * - target を不可視 iframe にしてページ遷移を起こさず実行する

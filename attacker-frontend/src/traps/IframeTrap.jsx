@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { VICTIM_API_BASE, DEFAULT_TARGET, DEFAULT_AMOUNT } from "../config.js";
 
 /**
- * ④ 不可視 iframe による継続攻撃。
+ * ④ 不可視 iframe による継続攻撃
  *
  * SPA 単独でも、罠①と同じ仕組みを iframe 内の form で繰り返す。
  * ここでは React 側で 3 つの iframe をマウントし、
