@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { api } from "../api.js";
+import { api } from "@/api.js";
 
 export default function LoginForm({ onLoggedIn }) {
   const [username, setUsername] = useState("alice");

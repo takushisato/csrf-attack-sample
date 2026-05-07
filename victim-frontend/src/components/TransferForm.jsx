@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { api } from "../api.js";
+import { api } from "@/api.js";
 
 export default function TransferForm({ onTransferred }) {
   const [to, setTo] = useState("mallory");

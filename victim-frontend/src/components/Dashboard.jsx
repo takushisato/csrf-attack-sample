@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { api } from "../api.js";
-import TransferForm from "./TransferForm.jsx";
-import HistoryList from "./HistoryList.jsx";
+import { api } from "@/api.js";
+import TransferForm from "@/components/TransferForm.jsx";
+import HistoryList from "@/components/HistoryList.jsx";
 
 export default function Dashboard({ me, onChange, onLogout }) {
   const [history, setHistory] = useState([]);

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { VICTIM_FRONTEND_BASE, VICTIM_API_BASE } from "./config.js";
-import AutoFormTrap from "./traps/AutoFormTrap.jsx";
-import ImageGetTrap from "./traps/ImageGetTrap.jsx";
-import FetchTrap from "./traps/FetchTrap.jsx";
-import IframeTrap from "./traps/IframeTrap.jsx";
+import { VICTIM_FRONTEND_BASE, VICTIM_API_BASE } from "@/config.js";
+import AutoFormTrap from "@/traps/AutoFormTrap.jsx";
+import ImageGetTrap from "@/traps/ImageGetTrap.jsx";
+import FetchTrap from "@/traps/FetchTrap.jsx";
+import IframeTrap from "@/traps/IframeTrap.jsx";
 
 const TRAPS = [
   {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { VICTIM_API_BASE, DEFAULT_TARGET, DEFAULT_AMOUNT } from "../config.js";
+import { VICTIM_API_BASE, DEFAULT_TARGET, DEFAULT_AMOUNT } from "@/config.js";
 
 /**
  * ③ fetch + credentials:'include' によるクロスオリジン JSON POST

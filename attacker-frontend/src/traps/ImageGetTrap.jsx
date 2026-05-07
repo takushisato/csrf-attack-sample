@@ -1,4 +1,4 @@
-import { VICTIM_API_BASE, DEFAULT_TARGET } from "../config.js";
+import { VICTIM_API_BASE, DEFAULT_TARGET } from "@/config.js";
 
 /**
  * ② <img src> による GET CSRF

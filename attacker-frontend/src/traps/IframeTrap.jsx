@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { VICTIM_API_BASE, DEFAULT_TARGET, DEFAULT_AMOUNT } from "../config.js";
+import { VICTIM_API_BASE, DEFAULT_TARGET, DEFAULT_AMOUNT } from "@/config.js";
 
 /**
  * ④ 不可視 iframe による継続攻撃

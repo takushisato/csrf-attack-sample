@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { api } from "./api.js";
-import LoginForm from "./components/LoginForm.jsx";
-import Dashboard from "./components/Dashboard.jsx";
+import { api } from "@/api.js";
+import LoginForm from "@/components/LoginForm.jsx";
+import Dashboard from "@/components/Dashboard.jsx";
 
 export default function App() {
   const [me, setMe] = useState(null);
